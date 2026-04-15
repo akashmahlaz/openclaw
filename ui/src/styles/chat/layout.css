@@ -481,7 +481,7 @@
   padding: 0;
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   flex-shrink: 0;
   transition:
     border-color var(--duration-fast) ease,
@@ -489,8 +489,9 @@
 }
 
 .agent-chat__input:focus-within {
-  border-color: var(--border-strong);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--border-strong) 24%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border-strong));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 8%, transparent),
+    0 4px 24px rgba(0, 0, 0, 0.15);
 }
 
 @supports (backdrop-filter: blur(1px)) {
@@ -603,47 +604,60 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
-  border-radius: var(--radius-md);
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-lg);
   border: none;
-  background: transparent;
-  color: var(--muted);
+  background: var(--primary);
+  color: var(--primary-foreground);
   cursor: pointer;
   flex-shrink: 0;
   transition:
     background var(--duration-fast) ease,
-    color var(--duration-fast) ease;
+    color var(--duration-fast) ease,
+    transform 100ms ease,
+    box-shadow var(--duration-fast) ease;
   padding: 0;
+  box-shadow: 0 2px 8px rgba(255, 92, 92, 0.25);
 }
 
 .chat-send-btn svg {
-  width: 15px;
-  height: 15px;
+  width: 16px;
+  height: 16px;
   stroke: currentColor;
   fill: none;
-  stroke-width: 1.5px;
+  stroke-width: 2px;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
 .chat-send-btn:hover:not(:disabled) {
-  color: var(--text);
-  background: var(--bg-hover);
+  background: var(--accent-hover);
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(255, 92, 92, 0.35);
+}
+
+.chat-send-btn:active:not(:disabled) {
+  transform: scale(0.95);
 }
 
 .chat-send-btn:disabled {
   opacity: 0.3;
   cursor: not-allowed;
+  background: var(--bg-muted);
+  color: var(--muted);
+  box-shadow: none;
 }
 
 .chat-send-btn--stop {
   background: var(--danger);
   color: var(--destructive-foreground);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
 }
 
 .chat-send-btn--stop:hover:not(:disabled) {
   background: color-mix(in srgb, var(--danger) 85%, #fff);
+  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
 }
 
 .slash-menu {
@@ -992,8 +1006,8 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  gap: 12px;
-  padding: 48px 24px;
+  gap: 16px;
+  padding: 64px 24px;
   flex: 1;
   min-height: 0;
 }
@@ -1003,26 +1017,28 @@
 }
 
 .agent-chat__welcome h2 {
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 700;
   margin: 0;
-  color: var(--foreground);
+  color: var(--text-strong);
+  letter-spacing: -0.02em;
 }
 
 .agent-chat__avatar--logo {
-  width: 48px;
-  height: 48px;
-  border-radius: var(--radius-lg);
-  background: var(--panel-strong);
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, var(--panel-strong), var(--card));
   border: 1px solid var(--border);
   display: grid;
   place-items: center;
   overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 }
 
 .agent-chat__avatar--logo img {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   object-fit: contain;
 }
 
@@ -1079,20 +1095,30 @@
 
 .agent-chat__suggestion {
   font-size: 13px;
-  padding: 8px 16px;
+  font-weight: 500;
+  padding: 10px 20px;
   border-radius: var(--radius-full);
   border: 1px solid var(--border);
   background: var(--panel);
-  color: var(--foreground);
+  color: var(--text);
   cursor: pointer;
   transition:
-    background 0.15s,
-    border-color 0.15s;
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
 }
 
 .agent-chat__suggestion:hover {
-  background: var(--panel-strong);
-  border-color: var(--accent);
+  background: var(--accent-subtle);
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+  color: var(--text-strong);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(255, 92, 92, 0.1);
+}
+
+.agent-chat__suggestion:active {
+  transform: translateY(0);
 }
 
 /* Mobile dropdown toggle — hidden on desktop */
