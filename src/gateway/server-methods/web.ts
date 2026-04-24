@@ -1,4 +1,3 @@
-import { listChannelPlugins } from "../../channels/plugins/index.js";
 import type { ChannelId } from "../../channels/plugins/types.public.js";
 import {
   ErrorCodes,
@@ -9,13 +8,8 @@ import {
 } from "../protocol/index.js";
 import { formatForLog } from "../ws-log.js";
 import type { GatewayRequestHandlers, RespondFn } from "./types.js";
-
-const WEB_LOGIN_METHODS = new Set(["web.login.start", "web.login.wait"]);
-
-const resolveWebLoginProvider = () =>
-  listChannelPlugins().find((plugin) =>
-    (plugin.gatewayMethods ?? []).some((method) => WEB_LOGIN_METHODS.has(method)),
-  ) ?? null;
+// FireClaw fork extension — keep upstream-file delta minimal for rebases.
+import { resolveWebLoginProvider } from "./fireclaw-web-fallback.js";
 
 function resolveAccountId(params: unknown): string | undefined {
   return typeof (params as { accountId?: unknown }).accountId === "string"

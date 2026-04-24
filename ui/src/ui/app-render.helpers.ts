@@ -14,6 +14,8 @@ import {
 import { refreshSlashCommands } from "./chat/slash-commands.ts";
 import { resolveControlUiAuthToken } from "./control-ui-auth.ts";
 import { ChatState, loadChatHistory } from "./controllers/chat.ts";
+// FireClaw fork extension Ã¢â‚¬â€ keep upstream-file delta minimal for rebases.
+import { filterChatModelsForConfiguredProviders, renderApiKeyButton } from "./fireclaw/api-key-ui.ts";
 import { loadSessions } from "./controllers/sessions.ts";
 import { icons } from "./icons.ts";
 import { iconForTab, pathForTab, titleForTab, type Tab } from "./navigation.ts";
@@ -171,7 +173,8 @@ function renderCronFilterIcon(hiddenCount: number) {
 }
 
 export function renderChatSessionSelect(state: AppViewState) {
-  return renderChatSessionSelectBase(state, switchChatSession);
+  // FireClaw fork extension — filter chat-model catalog to configured providers and append API key button.
+  return html`${renderChatSessionSelectBase(filterChatModelsForConfiguredProviders(state), switchChatSession)}${renderApiKeyButton(state)}`;
 }
 
 export function renderChatControls(state: AppViewState) {

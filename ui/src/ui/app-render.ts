@@ -22,6 +22,8 @@ import {
 } from "./app-render.helpers.ts";
 import { warnQueryToken } from "./app-settings.ts";
 import type { AppViewState } from "./app-view-state.ts";
+// FireClaw fork extension — keep upstream-file delta minimal for rebases.
+import { renderTopbarWhatsAppButton } from "./fireclaw/whatsapp-topbar.ts";
 import { loadAgentFileContent, loadAgentFiles, saveAgentFile } from "./controllers/agent-files.ts";
 import { loadAgentIdentities, loadAgentIdentity } from "./controllers/agent-identity.ts";
 import { loadAgentSkills } from "./controllers/agent-skills.ts";
@@ -152,7 +154,7 @@ import { renderGatewayUrlConfirmation } from "./views/gateway-url-confirmation.t
 import { renderLoginGate } from "./views/login-gate.ts";
 import { renderOverview } from "./views/overview.ts";
 
-// Lazy-loaded view modules – deferred so the initial bundle stays small.
+// Lazy-loaded view modules â€“ deferred so the initial bundle stays small.
 // Each loader resolves once; subsequent calls return the cached module.
 type LazyState<T> = { mod: T | null; promise: Promise<T> | null };
 
@@ -1254,12 +1256,13 @@ export function renderApp(state: AppViewState) {
               @click=${() => {
                 state.paletteOpen = !state.paletteOpen;
               }}
-              title="Search or jump to… (⌘K)"
+              title="Search or jump toâ€¦ (âŒ˜K)"
               aria-label="Open command palette"
             >
               <span class="topbar-search__label">${t("common.search")}</span>
-              <kbd class="topbar-search__kbd">⌘K</kbd>
+              <kbd class="topbar-search__kbd">âŒ˜K</kbd>
             </button>
+            ${renderTopbarWhatsAppButton(state)}
             <div class="topbar-status">
               ${isChat ? renderChatMobileToggle(state) : nothing}
               ${renderTopbarThemeModeToggle(state)}
@@ -1393,7 +1396,7 @@ export function renderApp(state: AppViewState) {
                 ?disabled=${state.updateRunning || !state.connected}
                 @click=${() => runUpdate(state)}
               >
-                ${state.updateRunning ? "Updating…" : "Update now"}
+                ${state.updateRunning ? "Updatingâ€¦" : "Update now"}
               </button>
               <button
                 class="update-banner__close"
