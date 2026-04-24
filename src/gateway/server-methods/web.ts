@@ -1,5 +1,3 @@
-import { listChannelPlugins } from "../../channels/plugins/index.js";
-import { listBundledChannelPlugins } from "../../channels/plugins/bundled.js";
 import {
   ErrorCodes,
   errorShape,
@@ -9,21 +7,8 @@ import {
 } from "../protocol/index.js";
 import { formatForLog } from "../ws-log.js";
 import type { GatewayRequestHandlers, RespondFn } from "./types.js";
-
-const WEB_LOGIN_METHODS = new Set(["web.login.start", "web.login.wait"]);
-
-const pluginRegistersWebLogin = (plugin: { gatewayMethods?: readonly string[] }) =>
-  (plugin.gatewayMethods ?? []).some((method) => WEB_LOGIN_METHODS.has(method));
-
-const resolveWebLoginProvider = () => {
-  // First check loaded (configured) plugins
-  const loaded = listChannelPlugins().find(pluginRegistersWebLogin);
-  if (loaded) return loaded;
-  // Fall back to bundled plugins so web QR setup works before the channel
-  // has been explicitly configured. This is required for first-time WhatsApp
-  // onboarding via the web UI.
-  return listBundledChannelPlugins().find(pluginRegistersWebLogin) ?? null;
-};
+// FireClaw fork extension — keep upstream-file delta minimal for rebases.
+import { resolveWebLoginProvider } from "./fireclaw-web-fallback.js";
 
 function resolveAccountId(params: unknown): string | undefined {
   return typeof (params as { accountId?: unknown }).accountId === "string"

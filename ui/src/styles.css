@@ -6,6 +6,8 @@
 @import "./styles/config.css";
 @import "./styles/usage.css";
 @import "./styles/dreams.css";
+/* FireClaw fork extension styles. Kept in a dedicated file so upstream rebases of layout.css do not collide with our patches. */
+@import "./styles/fireclaw.css";
 @import "@create-markdown/preview/themes/system.css";
 
 .cm-preview {
